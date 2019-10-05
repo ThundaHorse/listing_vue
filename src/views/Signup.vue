@@ -57,7 +57,9 @@ export default {
   methods: {
     submit: function() {
       var params = {
-        name: this.name,
+        first_name: this.firstName,
+        last_name: this.lastName,
+        phone_number: this.phoneNumber,
         email: this.email,
         password: this.password,
         password_confirmation: this.passwordConfirmation
