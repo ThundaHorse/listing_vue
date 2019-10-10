@@ -2,6 +2,9 @@
   <div class="showPosting">
     <h1>Show</h1>
     {{ listing }}
+    <br />
+    <hr />
+    <MessageBox />
   </div>
 </template>
 
@@ -10,8 +13,12 @@
 
 <script>
 import axios from "axios";
+import MessageBox from "../../components/MessagesBox";
 
 export default {
+  components: {
+    MessageBox
+  },
   data: function() {
     return {
       listing: []

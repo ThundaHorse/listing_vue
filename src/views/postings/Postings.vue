@@ -1,17 +1,22 @@
 <template>
   <div class="postings">
     <div v-if="postings[0] !== undefined">
-      <h1>{{ postings[0].lister.first_name }}'s Postings</h1>
-      <div v-for="(post, index) in postings" :key="index">
-        <!-- Post #: {{ post.id }} -->
-        <a @click.prevent="postPage(post)" style="cursor: pointer;">Post: {{ post.id }}</a>
-        <br />
-        <p>Products:</p>
-        <div v-for="item in post.items" :key="item.name">
-          <li>{{ item.name }}, ${{ item.price }}</li>
+      <hr />
+      <h1>Postings</h1>
+      <hr />
+      <div id="posts">
+        <div v-for="(post, index) in postings" :key="index">
+          <hr />
+          <a @click.prevent="postPage(post)" style="cursor: pointer;">Post: {{ post.id }}</a>
+          <br />
+          <p>Products:</p>
+          <div v-for="item in post.items" :key="item.name">
+            <li>{{ item.name }}, ${{ item.price }}</li>
+          </div>
+          <hr />
         </div>
       </div>
-      <MessageBox />
+      <!-- <MessageBox /> -->
     </div>
     <div v-else>
       <h1>You have no posts!</h1>
@@ -20,16 +25,23 @@
 </template>
 
 <style>
+div#posts {
+  height: 450px;
+  overflow-y: scroll;
+}
+div#posts::-webkit-scrollbar {
+  display: none;
+}
 </style>
 
 <script>
 import axios from "axios";
-import MessageBox from "../../components/MessagesBox";
+// import MessageBox from "../../components/MessagesBox";
 
 export default {
-  components: {
-    MessageBox
-  },
+  // components: {
+  //   MessageBox
+  // },
   data: function() {
     return {
       postings: [],
