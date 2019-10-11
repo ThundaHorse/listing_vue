@@ -1,7 +1,12 @@
 <template>
   <div class="showPosting">
-    <h1>Show</h1>
-    {{ listing }}
+    <div id="postinfo" class="container" v-for="(list, index) in listing.items" :key="index">
+      <span id="postItem">
+        <div id="itemName">• {{ list.name }}</div>
+        <div id="itemPrice">${{ list.price }}</div>
+        <br />
+      </span>
+    </div>
     <br />
     <hr />
     <MessageBox />
@@ -9,6 +14,26 @@
 </template>
 
 <style>
+span#postItem {
+  text-align: left;
+}
+div#itemName {
+  float: left;
+}
+div#itemPrice {
+  float: right;
+}
+div#postinfo {
+  width: 500px;
+  height: auto;
+  border: solid 2px;
+}
+div.showPosting {
+  overflow-y: scroll;
+}
+div.showPosting::-webkit-scrollbar {
+  display: none;
+}
 </style>
 
 <script>

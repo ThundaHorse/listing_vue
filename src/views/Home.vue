@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <p>Test</p>
-    <!-- <MessagesBox /> -->
+    <h1>Test</h1>
+    <p>Test page</p>
   </div>
 </template>
 
