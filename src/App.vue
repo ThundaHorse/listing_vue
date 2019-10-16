@@ -1,14 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/login">Log In</router-link>|
-      <router-link to="/logout">Logout</router-link>
-      <br />
-      <router-link to="/postings">Postings</router-link>|
-      <router-link to="/newpost">New Post</router-link>|
-      <router-link to="signup">Sign Up</router-link>
-    </div>
+    <br />
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/postings">Postings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/newpost">New Post</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          data-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >Account Info</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/login">Log In</a>
+          <a class="dropdown-item" href="/signup">Sign Up</a>
+          <a class="dropdown-item" href="/logout">Log Out</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Separated link</a>
+        </div>
+      </li>
+    </ul>
     <router-view />
   </div>
 </template>

@@ -7,10 +7,7 @@
       <div id="posts">
         <div v-for="(post, index) in postings" :key="index">
           <hr />
-          <a
-            @click.prevent="postPage(post)"
-            style="cursor: pointer;"
-          >{{ post.lister.first_name }}'s Post</a>
+          <a @click.prevent="postPage(post)" style="cursor: pointer;">{{ post.title }}</a>
           <br />
           <hr />
         </div>
@@ -24,7 +21,6 @@
 
 <style>
 div#posts {
-  /* height: 450px; */
   overflow-y: scroll;
 }
 div#posts::-webkit-scrollbar {

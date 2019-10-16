@@ -1,11 +1,10 @@
 <template>
   <div class="showPosting">
     <div id="postinfo" class="container" v-for="(list, index) in listing.items" :key="index">
-      <span id="postItem">
-        <div id="itemName">• {{ list.name }}</div>
-        <div id="itemPrice">${{ list.price }}</div>
-        <br />
-      </span>
+      <h1 id="itemName">{{ list.name }}</h1>
+      <br />
+      <p id="itemPrice">{{ list.price }}</p>
+      <br />
     </div>
     <br />
     <hr />
@@ -14,14 +13,8 @@
 </template>
 
 <style>
-span#postItem {
-  text-align: left;
-}
-div#itemName {
-  float: left;
-}
-div#itemPrice {
-  float: right;
+h1#postItem {
+  text-align: center;
 }
 div#postinfo {
   width: 500px;

@@ -2,13 +2,19 @@
   <div class="newPost">
     <h1>New Post</h1>
     <form v-on:submit.prevent="createListing()">
-      <br />Description:
+      Description:
       <input type="text" v-model="newItem.description" />
-      Name:
+      <br />Name:
       <input type="text" v-model="newItem.name" />
-      Price:
+      <br />Price:
       <input type="decimal" v-model="newItem.price" />
-      <input type="submit" value="submit" />
+      <br />Title:
+      <input type="text" v-model="newItem.title" />
+      <br />Image:
+      <input type="file" v-on:change="setFile($event)" ref="fileInput" />
+      <br />
+      <br />
+      <input class="btn btn-primary btn-round" type="submit" value="submit" />
     </form>
     <br />Created Items:
     <div v-for="created in createdItem" :key="created.name">{{ created }}</div>
@@ -28,7 +34,9 @@ export default {
         listing_id: "",
         name: "",
         description: "",
-        price: ""
+        price: "",
+        title: "",
+        image: ""
       },
       createdItem: []
     };
@@ -46,6 +54,26 @@ export default {
       axios.post("/api/items", params).then(response => {
         this.createdItem = response.data;
       });
+    },
+    setFile: function(event) {
+      if (event.target.files.length > 0) {
+        this.image = event.target.files[0];
+      }
+    },
+    submit: function() {
+      var formData = new FormData();
+      formData.append("listing_id", this.newItem.listing_id);
+      formData.append("name", this.newItem.name);
+      formData.append("description", this.newItem.description);
+      formData.append("price", this.newItem.price);
+      formData.append("title", this.newItem.title);
+      formData.append("image", this.newItem.image);
+
+      axios.post("/api/items", formData).then(response => {
+        this.newItem = "";
+      });
+      //   axios.post("http://localhost:3000/api/posts", formData).then(response => {
+      //     this.title = "";
     }
   }
 };
