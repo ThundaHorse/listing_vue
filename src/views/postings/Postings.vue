@@ -40,14 +40,9 @@ export default {
   },
   created: function() {
     if (localStorage.getItem("jwt")) {
-      var itemRequest = axios.get("/api/items/");
-      var listRequest = axios.get("/api/listings");
-      axios.all([itemRequest, listRequest]).then(
-        axios.spread((firstResponse, secondResponse) => {
-          this.postings = secondResponse.data;
-          this.items = firstResponse.data;
-        })
-      );
+      axios.get("/api/listings").then(response => {
+        this.postings = response.data;
+      });
     } else {
       alert("Sign in to view your postings and items");
       this.$router.push("/login");
