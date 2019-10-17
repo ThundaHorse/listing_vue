@@ -6,7 +6,7 @@
           <form v-on:submit.prevent="submit()">
             <h1>Login</h1>
             <ul>
-              <li class="text-danger" v-for="error in errors">{{ error }}</li>
+              <li class="text-danger" v-for="(error, index) in errors" :key="index">{{ error }}</li>
             </ul>
             <div class="form-group">
               <label>Email:</label>
