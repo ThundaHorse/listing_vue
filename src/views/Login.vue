@@ -47,13 +47,13 @@ export default {
             "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
-          this.$router.push("/");
         })
         .catch(error => {
           this.errors = ["Invalid email or password."];
           this.email = "";
           this.password = "";
         });
+      this.$router.push("/");
     }
   }
 };

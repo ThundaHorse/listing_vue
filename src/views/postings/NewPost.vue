@@ -2,7 +2,7 @@
   <div class="newPost">
     <div v-for="(err, index) in errors" :key="index">{{ err }}</div>
     <h1>New Post</h1>
-    <form v-on:submit.prevent="submit()">
+    <form v-on:submit.prevent="createListing()">
       Posting Title:
       <input type="text" v-model="newListing.title" />
       <br />Description:
@@ -15,8 +15,6 @@
       <input type="file" v-on:change="setFile($event)" ref="fileInput" multiple />
       <br />Form submit
       <input class="btn btn-primary btn-round" type="submit" value="submit" />
-      <!-- Submit function
-      <button class="btn btn-info btn-round" v-on:click="submit()">Submit</button>-->
     </form>
     <br />Created Items:
     <div v-for="created in createdItem" :key="created.name">{{ created }}</div>
@@ -54,7 +52,7 @@ export default {
     createListing() {
       axios.post("/api/listings", this.newListing).then(response => {
         this.newItem.listing_id = response.data.id;
-        // this.submit();
+        this.submit();
       });
     },
     createItem() {
@@ -64,49 +62,20 @@ export default {
       });
     },
     setFile: function(event) {
-      // if (event.target.files.length > 0) {
-      // this.image = event.target.files[0];
-      // this.newItem.image = event.target.files;
-      // var files = event.target.files;
-      // var output = [];
-      // for (var i = 0; i < files.length; i++) {
-      //   output.push(files[i]);
-      // }
-      // this.newItem.image.push(event.target.files);
-      // this.newItem.image = output;
-      // }
-      // let files = this.$refs.fileInput.value;
       let files = event.target.files;
       for (let file of files) {
-        // console.log(file);
         this.form.append("photos[]", file);
       }
     },
     submit: function() {
-      this.createListing();
-      // if (!this.createdListing.id) {
-      // setTimeout(() => {}, 1000);
-      // } else {
-      // var formData = new FormData();
-      // formData.append("listing_id", this.newItem.listing_id);
-      this.form.append("listing_id", 1);
+      this.form.append("listing_id", this.newItem.listing_id);
       this.form.append("name", this.newItem.name);
       this.form.append("description", this.newItem.description);
       this.form.append("price", this.newItem.price);
-      // this.form.append("photos", this.newItem.image);
-
-      // var params = {
-      //   listing_id: 1,
-      //   name: this.newItem.name,
-      //   description: this.newItem.description,
-      //   price: this.newItem.price,
-      //   photos: this.newItem.image
-      // };
       axios
         .post("/api/items", this.form)
         .then(response => {
           this.createdItem = response.data;
-          // console.log(this.createdItem);
           this.newItem.listing_id = "";
           this.newItem.name = "";
           this.newItem.description = "";
@@ -117,7 +86,6 @@ export default {
         .catch(errors => {
           this.errors = errors.response.data.errors;
         });
-      // }
     }
   }
 };

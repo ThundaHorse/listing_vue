@@ -11,6 +11,9 @@
   </div>
 </template>
 
+<style>
+</style>
+
 <script>
 import MessagesBox from "../components/MessagesBox";
 import axios from "axios";

@@ -1,11 +1,10 @@
 <template>
   <div class="showPosting">
-    <!-- <img v-bind:src="items[2].photos[0].img" v-bind:alt="items[2].name" /> -->
     <div v-for="(item, index) in items" :key="index">
-      <div v-for="image in item.photos" :key="image.img">
-        <img v-bind:src="image.img" v-bind:alt="image" />
-      </div>
       <h1 id="itemName">{{ item.name }}</h1>
+      <div v-for="image in item.photos" :key="image.id">
+        <img v-bind:src="image.img" v-bind:alt="image.id" />
+      </div>
       <br />
       <p id="itemPrice">{{item.price}}</p>
       <br />
