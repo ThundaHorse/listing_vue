@@ -27,6 +27,9 @@
           <li class="nav-item">
             <a class="nav-link" href="/signup">Sign Up</a>
           </li>
+          <li class="nav-item" v-if="loggedIn">
+            <a class="nav-link" href="/user_listings">Your Listings</a>
+          </li>
         </ul>
         <span class="navbar-text">
           <div v-if="loggedIn">
