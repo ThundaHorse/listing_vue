@@ -23,6 +23,8 @@
           aria-expanded="false"
         >Account Info</a>
         <div class="dropdown-menu">
+          <a class="dropdown-item" href="/user_listings">Your Listings</a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/login">Log In</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/logout">Log Out</a>

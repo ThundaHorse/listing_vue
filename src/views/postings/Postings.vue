@@ -1,11 +1,11 @@
 <template>
-  <div class="postings">
-    <div v-if="postings[0] !== undefined">
+  <div class="listings">
+    <div v-if="listings[0] !== undefined">
       <hr />
-      <h1>Postings</h1>
+      <h1>Listings</h1>
       <hr />
       <div id="posts">
-        <div v-for="(post, index) in postings" :key="index">
+        <div v-for="(post, index) in listings" :key="index">
           <hr />
           <a @click.prevent="postPage(post)" style="cursor: pointer;">{{ post.title }}</a>
           <br />
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-else>
-      <h1>You have no posts!</h1>
+      <h1>You have no listings!</h1>
     </div>
   </div>
 </template>
@@ -34,17 +34,17 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      postings: [],
+      listings: [],
       items: []
     };
   },
   created: function() {
     if (localStorage.getItem("jwt")) {
       axios.get("/api/listings").then(response => {
-        this.postings = response.data;
+        this.listings = response.data;
       });
     } else {
-      alert("Sign in to view your postings and items");
+      alert("Sign in to view your listings!");
       this.$router.push("/login");
     }
   },

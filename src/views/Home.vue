@@ -1,7 +1,12 @@
 <template>
   <div class="home">
     <br />
-    <h1>Welcome {{firstName}} {{lastName}}</h1>
+    <div v-if="userSignedIn === true">
+      <h1>Welcome {{firstName}} {{lastName}}</h1>
+    </div>
+    <div v-else>
+      <h1>Test</h1>
+    </div>
     <p>Test page</p>
   </div>
 </template>
@@ -18,15 +23,19 @@ export default {
   data: function() {
     return {
       firstName: "",
-      lastName: ""
+      lastName: "",
+      userSignedIn: false
     };
   },
   created: function() {
     axios
       .get("/api/users/" + localStorage.getItem("user_id"))
       .then(response => {
-        this.firstName = response.data.first_name;
-        this.lastName = response.data.last_name;
+        if (localStorage.getItem("jwt")) {
+          this.userSignedIn = true;
+          this.firstName = response.data.first_name;
+          this.lastName = response.data.last_name;
+        }
       });
   }
 };

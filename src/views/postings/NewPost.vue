@@ -1,20 +1,23 @@
 <template>
   <div class="newPost">
+    <div v-for="(err, index) in errors" :key="index">{{ err }}</div>
     <h1>New Post</h1>
-    <form v-on:submit.prevent="createListing()">
-      Description:
+    {{ createdItem }}
+    <form v-on:submit.prevent="submit()">
+      Posting Title:
+      <input type="text" v-model="newListing.title" />
+      <br />Description:
       <input type="text" v-model="newItem.description" />
-      <br />Name:
+      <br />Item Name:
       <input type="text" v-model="newItem.name" />
       <br />Price:
       <input type="decimal" v-model="newItem.price" />
-      <br />Title:
-      <input type="text" v-model="newItem.title" />
       <br />Image:
-      <input type="file" v-on:change="setFile($event)" ref="fileInput" />
-      <br />
-      <br />
+      <input type="file" v-on:change="setFile($event)" ref="fileInput" multiple />
+      <br />Form submit
       <input class="btn btn-primary btn-round" type="submit" value="submit" />
+      <!-- Submit function
+      <button class="btn btn-info btn-round" v-on:click="submit()">Submit</button>-->
     </form>
     <br />Created Items:
     <div v-for="created in createdItem" :key="created.name">{{ created }}</div>
@@ -35,18 +38,23 @@ export default {
         name: "",
         description: "",
         price: "",
-        title: "",
-        image: ""
+        image: []
       },
-      createdItem: []
+      createdItem: [],
+      createdListing: [],
+      newListing: {
+        title: "",
+        userId: parseInt(localStorage.getItem("user_id"))
+      },
+      errors: []
     };
   },
   created: function() {},
   methods: {
     createListing() {
-      axios.post("/api/listings").then(response => {
+      axios.post("/api/listings", this.newListing).then(response => {
         this.newItem.listing_id = response.data.id;
-        this.createItem();
+        // this.submit();
       });
     },
     createItem() {
@@ -57,23 +65,53 @@ export default {
     },
     setFile: function(event) {
       if (event.target.files.length > 0) {
-        this.image = event.target.files[0];
+        // this.image = event.target.files[0];
+        this.newItem.image = event.target.files;
+        // var files = event.target.files;
+        // var output = [];
+        // for (var i = 0; i < files.length; i++) {
+        //   output.push(files[i]);
+        // }
+        // this.newItem.image.push(event.target.files);
+        // this.newItem.image = output;
       }
     },
     submit: function() {
+      // this.createListing();
+      // if (!this.createdListing.id) {
+      // setTimeout(() => {}, 1000);
+      // } else {
       var formData = new FormData();
-      formData.append("listing_id", this.newItem.listing_id);
+      // formData.append("listing_id", this.newItem.listing_id);
+      formData.append("listing_id", parseInt("1"));
       formData.append("name", this.newItem.name);
       formData.append("description", this.newItem.description);
       formData.append("price", this.newItem.price);
-      formData.append("title", this.newItem.title);
-      formData.append("image", this.newItem.image);
+      formData.append("photos", this.newItem.image);
 
-      axios.post("/api/items", formData).then(response => {
-        this.newItem = "";
-      });
-      //   axios.post("http://localhost:3000/api/posts", formData).then(response => {
-      //     this.title = "";
+      var params = {
+        listing_id: 1,
+        name: this.newItem.name,
+        description: this.newItem.description,
+        price: this.newItem.price,
+        photos: this.newItem.image
+      };
+      axios
+        .post("/api/items", params)
+        .then(response => {
+          this.createdItem = response.data;
+          // console.log(this.createdItem);
+          this.newItem.listing_id = "";
+          this.newItem.name = "";
+          this.newItem.description = "";
+          this.newItem.price = "";
+          this.newItem.image = [];
+          this.$refs.fileInput.value = "";
+        })
+        .catch(errors => {
+          this.errors = errors.response.data.errors;
+        });
+      // }
     }
   }
 };
