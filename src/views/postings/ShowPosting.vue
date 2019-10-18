@@ -1,6 +1,19 @@
 <template>
   <div class="showPosting">
-    <div v-for="(item, index) in items" :key="index">
+    <div v-for="item in items" :key="item.price">
+      <button
+        @click.prevent="editPost(item.id)"
+        class="btn btn-round btn-warning"
+        id="editPost"
+        v-if="showButton"
+      >Edit</button>
+      <button
+        @click.prevent="deletePost(item.id)"
+        class="btn btn-round btn-danger"
+        id="deletePost"
+        v-if="showButton"
+      >Delete</button>
+      {{ item.id }}
       <h1 id="itemName">{{ item.name }}</h1>
       <div v-for="image in item.photos" :key="image.id">
         <img v-bind:src="image.img" v-bind:alt="image.id" />
@@ -16,6 +29,14 @@
 </template>
 
 <style>
+button#deletePost {
+  float: right;
+  margin-right: 10px;
+}
+button#editPost {
+  float: right;
+  margin-right: 20px;
+}
 h1#postItem {
   text-align: center;
 }
@@ -43,7 +64,8 @@ export default {
   data: function() {
     return {
       listing: [],
-      items: []
+      items: [],
+      showButton: false
     };
   },
   created: function() {
@@ -58,7 +80,26 @@ export default {
           this.items = second.data;
         })
       );
+    if (localStorage.getItem("jwt")) {
+      this.showButton = true;
+    }
   },
-  methods: {}
+  methods: {
+    deletePost(input) {
+      var deleteListing = axios.delete(
+        "/api/listings/" + this.$route.params.id
+      );
+      var deleteItem = axios.delete("/api/items/" + input);
+      axios.all([deleteListing, deleteItem]).then(
+        axios.spread(function(first, second) {
+          alert("Posting deleted successfully");
+        })
+      );
+      this.$router.push("/postings");
+    },
+    editPost(input) {
+      this.$router.push("/edit/" + input);
+    }
+  }
 };
 </script>

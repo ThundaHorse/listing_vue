@@ -5,6 +5,7 @@ import Postings from "./views/postings/Postings.vue";
 import NewPost from "./views/postings/NewPost.vue";
 import ShowPosting from "./views/postings/ShowPosting.vue";
 import UserPosts from "./views/postings/UserPosts.vue";
+import EditPost from "./views/postings/EditPost.vue";
 
 import Home from "./views/Home.vue";
 
@@ -20,6 +21,7 @@ export default new Router({
   routes: [
     { path: "/", name: "messages", component: Home },
     { path: "/postings", name: "postings", component: Postings },
+    { path: "/edit/:id", name: "editPost", component: EditPost },
     { path: "/postings/:id", name: "showPosting", component: ShowPosting },
     { path: "/user_listings", name: "userPosts", component: UserPosts },
     { path: "/newpost", name: "newPost", component: NewPost },
