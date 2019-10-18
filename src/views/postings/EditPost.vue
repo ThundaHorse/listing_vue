@@ -1,9 +1,25 @@
 <template>
   <div class="editPost">
     <h1>Placeholder</h1>
-    {{ item.id }}
-    <br />
+    {{ item.id }} •
     {{ item.listing_id }}
+    <br />
+    <form v-on:submit.prevent="submit()">
+      <label for="editedInfo.name">Name:</label>
+      <input type="text" v-model="editedInfo.name" />
+      <br />
+      <label for="editedInfo.description">Description:</label>
+      <br />
+      <textarea type="text" v-model="editedInfo.description" />
+      <br />
+      <label for="editedInfo.price">Price:</label>
+      <input type="decimal" v-model="editedInfo.price" />
+      <br />
+      <label for="editedInfo.images">Images</label>
+      <input type="file" v-on:change="setFile($event)" ref="fileInput" multiple />
+      <br />
+      <input type="submit" value="submit" class="btn btn-round btn-info" />
+    </form>
   </div>
 </template>
 
