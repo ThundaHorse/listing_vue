@@ -2,7 +2,6 @@
   <div class="newPost">
     <div v-for="(err, index) in errors" :key="index">{{ err }}</div>
     <h1>New Post</h1>
-    {{ createdItem }}
     <form v-on:submit.prevent="submit()">
       Posting Title:
       <input type="text" v-model="newListing.title" />
@@ -46,7 +45,8 @@ export default {
         title: "",
         userId: parseInt(localStorage.getItem("user_id"))
       },
-      errors: []
+      errors: [],
+      form: new FormData()
     };
   },
   created: function() {},
@@ -64,40 +64,46 @@ export default {
       });
     },
     setFile: function(event) {
-      if (event.target.files.length > 0) {
-        // this.image = event.target.files[0];
-        this.newItem.image = event.target.files;
-        // var files = event.target.files;
-        // var output = [];
-        // for (var i = 0; i < files.length; i++) {
-        //   output.push(files[i]);
-        // }
-        // this.newItem.image.push(event.target.files);
-        // this.newItem.image = output;
+      // if (event.target.files.length > 0) {
+      // this.image = event.target.files[0];
+      // this.newItem.image = event.target.files;
+      // var files = event.target.files;
+      // var output = [];
+      // for (var i = 0; i < files.length; i++) {
+      //   output.push(files[i]);
+      // }
+      // this.newItem.image.push(event.target.files);
+      // this.newItem.image = output;
+      // }
+      // let files = this.$refs.fileInput.value;
+      let files = event.target.files;
+      for (let file of files) {
+        // console.log(file);
+        this.form.append("photos[]", file);
       }
     },
     submit: function() {
-      // this.createListing();
+      this.createListing();
       // if (!this.createdListing.id) {
       // setTimeout(() => {}, 1000);
       // } else {
-      var formData = new FormData();
+      // var formData = new FormData();
       // formData.append("listing_id", this.newItem.listing_id);
-      formData.append("listing_id", parseInt("1"));
-      formData.append("name", this.newItem.name);
-      formData.append("description", this.newItem.description);
-      formData.append("price", this.newItem.price);
-      formData.append("photos", this.newItem.image);
+      this.form.append("listing_id", 1);
+      this.form.append("name", this.newItem.name);
+      this.form.append("description", this.newItem.description);
+      this.form.append("price", this.newItem.price);
+      // this.form.append("photos", this.newItem.image);
 
-      var params = {
-        listing_id: 1,
-        name: this.newItem.name,
-        description: this.newItem.description,
-        price: this.newItem.price,
-        photos: this.newItem.image
-      };
+      // var params = {
+      //   listing_id: 1,
+      //   name: this.newItem.name,
+      //   description: this.newItem.description,
+      //   price: this.newItem.price,
+      //   photos: this.newItem.image
+      // };
       axios
-        .post("/api/items", params)
+        .post("/api/items", this.form)
         .then(response => {
           this.createdItem = response.data;
           // console.log(this.createdItem);

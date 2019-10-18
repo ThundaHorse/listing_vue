@@ -1,9 +1,13 @@
 <template>
   <div class="showPosting">
-    <div id="postinfo" class="container" v-for="(list, index) in listing.items" :key="index">
-      <h1 id="itemName">{{ list.name }}</h1>
+    <!-- <img v-bind:src="items[2].photos[0].img" v-bind:alt="items[2].name" /> -->
+    <div v-for="(item, index) in items" :key="index">
+      <div v-for="image in item.photos" :key="image.img">
+        <img v-bind:src="image.img" v-bind:alt="image" />
+      </div>
+      <h1 id="itemName">{{ item.name }}</h1>
       <br />
-      <p id="itemPrice">{{ list.price }}</p>
+      <p id="itemPrice">{{item.price}}</p>
       <br />
     </div>
     <br />
@@ -39,13 +43,22 @@ export default {
   },
   data: function() {
     return {
-      listing: []
+      listing: [],
+      items: []
     };
   },
   created: function() {
-    axios.get("/api/listings/" + this.$route.params.id).then(response => {
-      this.listing = response.data;
-    });
+    axios
+      .all([
+        axios.get("/api/listings/" + this.$route.params.id),
+        axios.get("/api/user_items/" + this.$route.params.id)
+      ])
+      .then(
+        axios.spread((first, second) => {
+          this.listing = first.data;
+          this.items = second.data;
+        })
+      );
   },
   methods: {}
 };
