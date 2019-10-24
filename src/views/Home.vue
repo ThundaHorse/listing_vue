@@ -20,9 +20,6 @@ import axios from "axios";
 
 export default {
   name: "home",
-  components: {
-    // MessagesBox
-  },
   data: function() {
     return {
       firstName: "",
