@@ -1,13 +1,15 @@
 <template>
   <div class="userPosts">
     <h1>Your listings</h1>
-    <div v-for="(post, index) in posts" :key="index">
-      <a id="postLink" @click.prevent="postPage(post.id)">{{post.id}}. {{ post.title }}</a>
-      <div v-for="item in post.items" :key="item.name">
-        {{ item.name }}
-        <br />
+    <div class="container">
+      <div v-for="(post, index) in posts" :key="index">
+        <div class="card text-white bg-dark mb-3 mr-2 ml-2" style="width: 18rem; float: left;">
+          <a id="postLink" @click.prevent="postPage(post.id)">{{post.id}}. {{ post.title }}</a>
+          <div class="card-body">
+            <div v-for="item in post.items" :key="item.name">{{ item.name }}</div>
+          </div>
+        </div>
       </div>
-      <hr />
     </div>
   </div>
 </template>

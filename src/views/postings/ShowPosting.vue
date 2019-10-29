@@ -15,8 +15,8 @@
       >Delete</button>
       {{ item.id }}
       <h1 id="itemName">{{ item.name }}</h1>
-      <div v-for="image in item.photos" :key="image.id">
-        <img v-bind:src="image.img" v-bind:alt="image.id" />
+      <div v-for="image in item.photos" :key="image.id" class="images">
+        <img class="productImage" v-bind:src="image.img" v-bind:alt="image.id" />
       </div>
       <br />
       <p id="itemPrice">{{item.price}}</p>
@@ -29,6 +29,10 @@
 </template>
 
 <style>
+.productImage {
+  width: 40%;
+  height: auto;
+}
 button#deletePost {
   float: right;
   margin-right: 10px;

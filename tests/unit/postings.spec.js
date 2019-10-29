@@ -1,5 +1,5 @@
 import { shallowMount } from "@vue/test-utils";
-import Postings from "@/views/Postings.vue";
+import Postings from "../../src/views/postings/Postings.vue";
 
 describe("Postings.vue", () => {
   it("has a MessageBox component", () => {
