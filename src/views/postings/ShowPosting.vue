@@ -111,7 +111,9 @@ export default {
           })
         );
         this.$router.push("/postings");
-      } else alert("This is not your post");
+      } else {
+        alert("This is not your post");
+      }
     },
     editPost(input) {
       this.$router.push("/edit/" + input);
