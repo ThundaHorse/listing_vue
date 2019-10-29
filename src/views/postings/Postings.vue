@@ -7,7 +7,11 @@
       <div id="posts">
         <div v-for="(post, index) in listings" :key="index">
           <hr />
-          <a @click.prevent="postPage(post)" style="cursor: pointer;">{{ post.title }}</a>
+          <a
+            class="posting"
+            @click.prevent="postPage(post)"
+            style="cursor: pointer;"
+          >{{ post.title }}</a>
           <br />
           <hr />
         </div>

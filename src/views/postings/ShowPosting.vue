@@ -14,6 +14,8 @@
         v-if="showButton"
       >Delete</button>
       {{ item.id }}
+      <br />
+      user: {{ listing.user_id }}
       <h1 id="itemName">{{ item.name }}</h1>
 
       <div class="row">
