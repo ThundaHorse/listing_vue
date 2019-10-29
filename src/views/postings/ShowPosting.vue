@@ -1,23 +1,24 @@
 <template>
   <div class="showPosting">
     <div v-for="item in items" :key="item.price">
-      <button
-        @click.prevent="editPost(item.id)"
-        class="btn btn-round btn-warning"
-        id="editPost"
-        v-if="showButton"
-      >Edit</button>
-      <button
-        @click.prevent="deletePost(item.id)"
-        class="btn btn-round btn-danger"
-        id="deletePost"
-        v-if="showButton"
-      >Delete</button>
+      <div v-if="listing.user_id == user">
+        <button
+          @click.prevent="editPost(item.id)"
+          class="btn btn-round btn-warning"
+          id="editPost"
+          v-if="showButton"
+        >Edit</button>
+        <button
+          @click.prevent="deletePost(item.id)"
+          class="btn btn-round btn-danger"
+          id="deletePost"
+          v-if="showButton"
+        >Delete</button>
+      </div>
       {{ item.id }}
       <br />
       user: {{ listing.user_id }}
       <h1 id="itemName">{{ item.name }}</h1>
-
       <div class="row">
         <div class="col-md-12">
           <div v-for="(image, index) in item.photos" :key="index">
@@ -27,12 +28,9 @@
           </div>
         </div>
       </div>
-
       <br />
-      <p id="itemPrice">{{item.price}}</p>
-      <br />
+      <h1 id="itemPrice">${{item.price}}</h1>
     </div>
-    <br />
     <hr />
     <MessageBox />
   </div>
@@ -80,7 +78,8 @@ export default {
     return {
       listing: [],
       items: [],
-      showButton: false
+      showButton: false,
+      user: localStorage.getItem("user_id")
     };
   },
   created: function() {
@@ -113,8 +112,6 @@ export default {
           })
         );
         this.$router.push("/postings");
-      } else {
-        alert("This is not your post");
       }
     },
     editPost(input) {

@@ -36,6 +36,7 @@ div#posts::-webkit-scrollbar {
 import axios from "axios";
 
 export default {
+  name: "postings",
   data: function() {
     return {
       listings: [],
