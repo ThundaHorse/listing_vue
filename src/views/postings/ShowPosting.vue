@@ -103,12 +103,15 @@ export default {
         "/api/listings/" + this.$route.params.id
       );
       var deleteItem = axios.delete("/api/items/" + input);
-      axios.all([deleteListing, deleteItem]).then(
-        axios.spread(function(first, second) {
-          alert("Posting deleted successfully");
-        })
-      );
-      this.$router.push("/postings");
+
+      if (localStorage.getItem("user_id") === this.listing.user_id) {
+        axios.all([deleteListing, deleteItem]).then(
+          axios.spread(function(first, second) {
+            alert("Posting deleted successfully");
+          })
+        );
+        this.$router.push("/postings");
+      } else alert("This is not your post");
     },
     editPost(input) {
       this.$router.push("/edit/" + input);
