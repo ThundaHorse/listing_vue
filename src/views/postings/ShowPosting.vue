@@ -15,9 +15,17 @@
       >Delete</button>
       {{ item.id }}
       <h1 id="itemName">{{ item.name }}</h1>
-      <div v-for="image in item.photos" :key="image.id" class="images">
-        <img class="productImage" v-bind:src="image.img" v-bind:alt="image.id" />
+
+      <div class="row">
+        <div class="col-md-12">
+          <div v-for="(image, index) in item.photos" :key="index">
+            <div class="col md-4">
+              <img v-bind:src="image.img" v-bind:alt="image.id" class="productImage mr-2 ml-auto" />
+            </div>
+          </div>
+        </div>
       </div>
+
       <br />
       <p id="itemPrice">{{item.price}}</p>
       <br />
@@ -30,7 +38,8 @@
 
 <style>
 .productImage {
-  width: 40%;
+  float: left;
+  width: 30%;
   height: auto;
 }
 button#deletePost {

@@ -15,11 +15,11 @@
         <div class="col-md-6" id="chatBox">
           <h1>All Messages</h1>
           <div class="jumbotron mt-2 py-2" v-for="message in messages" :key="message.id">
-            <p class="lead">
+            <p class="lead" style="color: black;">
               <strong>{{ message.name }}</strong>
               : {{ message.created_at }}
             </p>
-            <p>{{ message.body }}</p>
+            <p style="color: black;">{{ message.body }}</p>
           </div>
         </div>
       </div>
