@@ -3,25 +3,32 @@
     <div v-for="(err, index) in errors" :key="index">{{ err }}</div>
     <h1>New Post</h1>
 
-    <div class="container">
-      <form v-on:submit.prevent="createListing()">
-        <div class="form-group">
-          <label for="postTitle">Posting Title:</label>
-          <input class="form-control" type="text" v-model="newListing.title" />
-          <label for="postDescription">Description:</label>
-          <input class="form-control" type="text" v-model="newItem.description" />
-          <label for="postName">Name:</label>
-          <input class="form-control" type="text" v-model="newItem.name" />
-          <label for="postPrice">Price:</label>
-          <input class="form-control" type="decimal" v-model="newItem.price" />
-        </div>
-        <div class="form-group">
-          <label for="postImage">Images</label>
-          <input type="file" v-on:change="setFile($event)" ref="fileInput" multiple />
-        </div>
-        <br />
-        <input class="btn btn-primary btn-round" type="submit" value="submit" />
-      </form>
+    <div
+      class="card bg-dark text-light mr-auto ml-auto mb-3"
+      style="width: auto; border-radius: 5px;"
+    >
+      <div class="container">
+        <form v-on:submit.prevent="createListing()">
+          <div class="form-group">
+            <label for="postTitle">Posting Title:</label>
+            <input class="form-control" type="text" v-model="newListing.title" />
+            <label for="postDescription">Description:</label>
+            <input class="form-control" type="text" v-model="newItem.description" />
+            <label for="postName">Name:</label>
+            <input class="form-control" type="text" v-model="newItem.name" />
+            <label for="postPrice">Price:</label>
+            <input class="form-control" type="decimal" v-model="newItem.price" />
+          </div>
+          <div class="form-group">
+            <label for="postImage">Images</label>
+            <br />
+            <input type="file" v-on:change="setFile($event)" ref="fileInput" multiple />
+          </div>
+          <div class="form-group">
+            <input class="btn btn-primary btn-round" type="submit" value="submit" />
+          </div>
+        </form>
+      </div>
     </div>
     <br />Created Items:
     <div v-for="created in createdItem" :key="created.name">{{ created }}</div>
