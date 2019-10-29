@@ -1,25 +1,44 @@
 <template>
   <div class="editPost">
     <h1>Placeholder</h1>
-    {{ item.id }} •
-    {{ item.listing_id }}
     <br />
-    <form v-on:submit.prevent="submit()">
-      <label for="editedInfo.name">Name:</label>
-      <input type="text" v-model="editedInfo.name" />
-      <br />
-      <label for="editedInfo.description">Description:</label>
-      <br />
-      <textarea type="text" v-model="editedInfo.description" />
-      <br />
-      <label for="editedInfo.price">Price:</label>
-      <input type="decimal" v-model="editedInfo.price" />
-      <br />
-      <label for="editedInfo.images">Images</label>
-      <input type="file" v-on:change="setFile($event)" ref="fileInput" multiple />
-      <br />
-      <input type="submit" value="submit" class="btn btn-round btn-info" />
-    </form>
+    <div class="card bg-dark text-light mr-audo ml-auto mb-3">
+      <div class="container">
+        <form v-on:submit.prevent="submit()">
+          <div class="form-group">
+            <label for="itemName">Name</label>
+            <input
+              class="form-control"
+              type="text"
+              v-model="editedInfo.name"
+              :placeholder="item.name"
+            />
+            <label for="itemDesc">Description</label>
+            <input
+              class="form-control"
+              type="text"
+              v-model="editedInfo.description"
+              :placeholder="item.description"
+            />
+            <label for="itemPrice">Price</label>
+            <input
+              class="form-control"
+              type="decimal"
+              v-model="editedInfo.price"
+              :placeholder="item.price"
+            />
+          </div>
+          <div class="form-group">
+            <label for="itemImages">Images</label>
+            <br />
+            <input type="file" v-on:change="setFile($event)" ref="fileInput" multiple />
+          </div>
+          <div class="form-group">
+            <input class="btn btn-primary btn-round" type="submit" value="submit" />
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -43,7 +62,8 @@ export default {
     };
   },
   created: function() {
-    axios.get("/api/items/" + this.$route.params.id).then(response => {
+    let itemFetch = axios.get("/api/items/" + this.$route.params.id);
+    itemFetch.then(response => {
       this.item = response.data;
     });
   },
