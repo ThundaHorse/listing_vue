@@ -1,7 +1,10 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import VueRouter from "vue-router";
 import Router from "../../src/router";
+jest.mock("axios");
+
 import Postings from "../../src/views/postings/Postings.vue";
+import Login from "../../src/views/Login.vue";
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
@@ -42,49 +45,49 @@ describe("Postings.vue", () => {
         { description: "Test 2", name: "Test 2", price: 99.99, listing_id: 2 }
       ]
     });
-
-    console.log(wrapper.find("a").text());
+    expect(wrapper.vm.$data.items.length).toBe(2);
   });
 });
 
-// describe("Postings.vue", () => {
-//   beforeEach(() => {
-//     window.alert = jest.fn();
-//     Postings.mounted = jest.fn();
-//     Postings.created = jest.fn();
-//   });
+describe("Login.vue", () => {
+  const mockAxios = {
+    get: jest.fn().mockImplementation(() => {
+      return new Promise((res, rej) => {
+        mockAxios._resolve = res;
+        mockAxios._reject = rej;
+      });
+    }),
+    post: jest.fn().mockImplementation(() => {
+      return new Promise((res, rej) => {
+        mockAxios._resolve = res;
+        mockAxios._reject = rej;
+      });
+    }),
+    mockSuccess(resp) {
+      this._resolve(resp);
+    },
+    mockError(resp) {
+      this._reject(resp);
+    },
+    _resolve: null,
+    _reject: null
+  };
 
-//   it("properly displays a listing", () => {
-//     const wrapper = shallowMount(Postings, { localVue, router });
-//     wrapper.setData({
-//   listings: [{ id: 1, user_id: 1, title: "Test" }],
-//   items: [
-//     { description: "Test", name: "Test", price: 99.99, listing_id: 1 }
-//   ]
-// });
+  it("logs a user in", () => {
+    const wrapper = shallowMount(Login, {
+      localVue,
+      router
+    });
 
-//     let link = wrapper.find("a");
-//     expect(link.text()).toBe("Test");
-//   });
+    wrapper.setData({ email: "test@test.com", password: "p" });
+    let loginForm = wrapper.find("form");
+    loginForm.trigger("submit");
+    // wrapper.vm.$nextTick(() => {
+    mockAxios.post(wrapper.vm.submit());
+    // });
 
-//   it("displays a message when no listings are available", () => {
-//     const wrapper = shallowMount(Postings, { localVue });
-//     let link = wrapper.find("h1");
-//     expect(link.text()).toBe("You have no listings!");
-//   });
-
-//   it("triggers the show action when clicking a listing", () => {
-//     const wrapper = shallowMount(Postings, { localVue, router });
-//     const spy = jest.fn();
-//     wrapper.setData({
-//       listings: [{ id: 1, user_id: 1, title: "Test" }],
-//       items: [
-//         { description: "Test", name: "Test", price: 99.99, listing_id: 1 }
-//       ]
-//     });
-//     wrapper.setMethods({ postPage: spy });
-//     let link = wrapper.find("a.posting");
-//     link.trigger("click");
-//     expect(spy).toHaveBeenCalled();
-//   });
-// });
+    expect(wrapper.vm.email).toBe("test@test.com");
+    expect(wrapper.vm.password).toBe("p");
+    expect(wrapper.vm.submit()).toHaveBeenCalled();
+  });
+});
