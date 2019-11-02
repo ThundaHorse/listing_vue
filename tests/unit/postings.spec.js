@@ -1,10 +1,12 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import VueRouter from "vue-router";
 import Router from "../../src/router";
-jest.mock("axios");
+import axios from "axios";
 
 import Postings from "../../src/views/postings/Postings.vue";
 import Login from "../../src/views/Login.vue";
+
+jest.mock("axios");
 
 const localVue = createLocalVue();
 localVue.use(VueRouter);
@@ -78,16 +80,19 @@ describe("Login.vue", () => {
       localVue,
       router
     });
+    const response = { data: true };
+    axios.post.mockResolvedValue(response);
 
     wrapper.setData({ email: "test@test.com", password: "p" });
     let loginForm = wrapper.find("form");
     loginForm.trigger("submit");
-    // wrapper.vm.$nextTick(() => {
-    mockAxios.post(wrapper.vm.submit());
-    // });
+
+    const mockSubmitFunction = jest.fn();
+    const formSubmit = wrapper.vm.submit;
+    const bound = mockSubmitFunction.mockImplementation(formSubmit);
 
     expect(wrapper.vm.email).toBe("test@test.com");
     expect(wrapper.vm.password).toBe("p");
-    expect(wrapper.vm.submit()).toHaveBeenCalled();
+    expect(bound).toHaveBeenCalled();
   });
 });
