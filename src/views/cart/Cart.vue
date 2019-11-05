@@ -1,6 +1,9 @@
 <template>
   <div class="cart">
-    <h1>{{ cart[0].quantity }} x {{ cart[0].product.name }} @ {{ cart[0].product.price }}</h1>
+    <h1>Your Cart</h1>
+    <div v-for="(item, index) in cart" :key="index">
+      <p>{{ item.quantity }} x {{ item.item.name }} @ ${{ item.item.price }}</p>
+    </div>
   </div>
 </template>
 

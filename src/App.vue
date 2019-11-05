@@ -33,7 +33,11 @@
         </ul>
         <span class="navbar-text">
           <div v-if="loggedIn">
-            <a class="navbar-text" href="/cart" style="padding-right: 20px;">Your Cart</a>
+            <a
+              class="navbar-text"
+              href="/cart"
+              style="padding-right: 20px;"
+            >Your Cart ({{ cartQuantity() }})</a>
             <a class="navbar-text" href="/logout">Log Out</a>
           </div>
           <div v-else>
@@ -69,16 +73,21 @@
 </style>
 
 <script>
+import axios from "axios";
+
 export default {
   data: function() {
     return {
-      loggedIn: false
+      loggedIn: false,
+      quantity: 0,
+      items: []
     };
   },
   watch: {
     loggedIn: function() {
       this.checkLoggedIn();
-    }
+    },
+    cartItems: function() {}
   },
   created: function() {
     if (localStorage.getItem("jwt")) {
@@ -86,6 +95,10 @@ export default {
     } else {
       this.loggedIn = false;
     }
+
+    axios.get("/api/carted_products").then(response => {
+      this.items = response.data;
+    });
   },
   methods: {
     checkLoggedIn: function() {
@@ -94,6 +107,9 @@ export default {
       } else {
         this.loggedIn = false;
       }
+    },
+    cartQuantity: function() {
+      return this.items.length;
     }
   }
 };

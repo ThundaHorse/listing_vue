@@ -2,6 +2,7 @@
   <div class="showPosting">
     <div v-for="item in items" :key="item.price">
       <div v-if="listing.user_id == user">
+        <br />
         <button
           @click.prevent="editPost(item.id)"
           class="btn btn-round btn-warning"
@@ -15,8 +16,16 @@
           v-if="showButton"
         >Delete</button>
       </div>
+      <div v-else>
+        <br />
+        <button
+          class="btn btn-round btn-primary"
+          id="addToCart"
+          @click.prevent="addToCart(item)"
+        >Add To Cart</button>
+      </div>
       {{ item.id }}
-      <br />
+      {{ items }}
       user: {{ listing.user_id }}
       <h1 id="itemName">{{ item.name }}</h1>
       <div class="col-md-12">
@@ -76,6 +85,10 @@ button#deletePost {
   margin-right: 10px;
 }
 button#editPost {
+  float: right;
+  margin-right: 20px;
+}
+button#addToCart {
   float: right;
   margin-right: 20px;
 }
@@ -145,6 +158,17 @@ export default {
     },
     editPost(input) {
       this.$router.push("/edit/" + input);
+    },
+    addToCart(input) {
+      var params = {
+        item_id: input.id,
+        quantity: 1,
+        status: 1
+      };
+      axios.post("/api/carted_products", params).then(response => {
+        console.log(response.data);
+        alert("Successfully added to cart");
+      });
     }
   }
 };
