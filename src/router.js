@@ -11,7 +11,7 @@ import Home from "./views/Home.vue";
 
 import Signup from "./views/Signup.vue";
 import Login from "./views/Login.vue";
-import Logout from "./views/Logout.vue";
+// import Logout from "./views/Logout.vue";
 
 import Cart from "./views/cart/Cart.vue";
 
@@ -29,7 +29,6 @@ export default new Router({
     { path: "/cart", name: "cart", component: Cart },
     { path: "/newpost", name: "newPost", component: NewPost },
     { path: "/signup", name: "signup", component: Signup },
-    { path: "/login", name: "login", component: Login },
-    { path: "/logout", name: "logout", component: Logout }
+    { path: "/login", name: "login", component: Login }
   ]
 });

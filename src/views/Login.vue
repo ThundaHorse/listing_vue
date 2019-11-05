@@ -27,7 +27,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "login",
+  name: "Login",
   data: function() {
     return {
       email: "",

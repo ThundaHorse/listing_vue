@@ -1,9 +1,22 @@
 <template>
   <div class="cart">
     <h1>Your Cart</h1>
-    <div v-for="(item, index) in cart" :key="index">
-      <p>{{ item.quantity }} x {{ item.item.name }} @ ${{ item.item.price }}</p>
+    <div v-if="cart.length == 0">
+      <h1>Your cart is currently empty!</h1>
     </div>
+    <div v-for="(item, index) in cart" :key="index">
+      {{ item.item.id }}
+      <a
+        style="cursor: pointer;"
+        @click.prevent="itemPage(item)"
+      >{{ item.quantity }} x {{ item.item.name }} @ ${{ item.item.price }}</a>
+      <p @click.prevent="removeItem(item)">Remove</p>
+    </div>
+    <br />
+    <h1>Total</h1>
+    <hr />
+    <h1>${{total}}</h1>
+    <button @click.prevent="createOrder()">Create Order</button>
   </div>
 </template>
 
@@ -17,14 +30,33 @@ export default {
   name: "cart",
   data: function() {
     return {
-      cart: []
+      cart: [],
+      total: 0
     };
   },
   created: function() {
     axios.get("/api/carted_products").then(response => {
       this.cart = response.data;
+      this.total = this.cart[0].total;
     });
   },
-  methods: {}
+  methods: {
+    itemPage: function(input) {
+      this.$router.push("/postings/" + input.item.listing_id);
+    },
+    removeItem: function(input) {
+      axios.delete("/api/carted_products/" + input.id).then(response => {
+        console.log("removed");
+      });
+    },
+    createOrder() {
+      var params = {
+        user_id: parseInt(localStorage.getItem("user_id"))
+      };
+      axios.post("/api/orders", params).then(response => {
+        console.log(response.data);
+      });
+    }
+  }
 };
 </script>

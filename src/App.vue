@@ -1,51 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="/">Home</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarText"
-        aria-controls="navbarText"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/postings">
-              Postings
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/newpost">New Post</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/signup">Sign Up</a>
-          </li>
-          <li class="nav-item" v-if="loggedIn">
-            <a class="nav-link" href="/user_listings">Your Listings</a>
-          </li>
-        </ul>
-        <span class="navbar-text">
-          <div v-if="loggedIn">
-            <a
-              class="navbar-text"
-              href="/cart"
-              style="padding-right: 20px;"
-            >Your Cart ({{ cartQuantity() }})</a>
-            <a class="navbar-text" href="/logout">Log Out</a>
-          </div>
-          <div v-else>
-            <a class="navbar-text" href="/login">Log In</a>
-          </div>
-        </span>
-      </div>
-    </nav>
+    <Navbar></Navbar>
     <router-view />
   </div>
 </template>
@@ -74,43 +29,16 @@
 
 <script>
 import axios from "axios";
+import Navbar from "./components/Navbar";
 
 export default {
   data: function() {
-    return {
-      loggedIn: false,
-      quantity: 0,
-      items: []
-    };
+    return {};
   },
-  watch: {
-    loggedIn: function() {
-      this.checkLoggedIn();
-    },
-    cartItems: function() {}
+  components: {
+    Navbar
   },
-  created: function() {
-    if (localStorage.getItem("jwt")) {
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
-
-    axios.get("/api/carted_products").then(response => {
-      this.items = response.data;
-    });
-  },
-  methods: {
-    checkLoggedIn: function() {
-      if (localStorage.getItem("jwt")) {
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
-      }
-    },
-    cartQuantity: function() {
-      return this.items.length;
-    }
-  }
+  created: function() {},
+  methods: {}
 };
 </script>
