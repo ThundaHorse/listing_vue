@@ -33,6 +33,7 @@
         </ul>
         <span class="navbar-text">
           <div v-if="loggedIn">
+            <a class="navbar-text" href="/cart" style="padding-right: 20px;">Your Cart</a>
             <a class="navbar-text" href="/logout">Log Out</a>
           </div>
           <div v-else>
