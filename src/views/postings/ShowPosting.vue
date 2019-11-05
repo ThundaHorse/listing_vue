@@ -19,13 +19,43 @@
       <br />
       user: {{ listing.user_id }}
       <h1 id="itemName">{{ item.name }}</h1>
-      <div class="row">
-        <div class="col-md-12">
-          <div v-for="(image, index) in item.photos" :key="index">
-            <div class="col md-4">
-              <img v-bind:src="image.img" v-bind:alt="image.id" class="productImage mr-2 ml-auto" />
+      <div class="col-md-12">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators" v-for="(item, index) in item.photos" :key="item.id">
+            <li
+              data-target="#carouselExampleIndicators"
+              data-slide-to="0"
+              :class="{active: index == 0}"
+            ></li>
+          </ol>
+          <div class="carousel-inner">
+            <div
+              class="carousel-item"
+              v-for="(image, idx) in item.photos"
+              :key="idx"
+              :class="{ active: idx == 0 }"
+            >
+              <img :src="image.img" alt class="productImage" />
             </div>
           </div>
+          <a
+            class="carousel-control-prev"
+            href="#carouselExampleIndicators"
+            role="button"
+            data-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a
+            class="carousel-control-next"
+            href="#carouselExampleIndicators"
+            role="button"
+            data-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
       </div>
       <br />
@@ -38,8 +68,7 @@
 
 <style>
 .productImage {
-  float: left;
-  width: 30%;
+  width: 40%;
   height: auto;
 }
 button#deletePost {
@@ -78,10 +107,10 @@ export default {
     return {
       listing: [],
       items: [],
-      showButton: false,
       user: localStorage.getItem("user_id")
     };
   },
+  computed: {},
   created: function() {
     axios
       .all([
