@@ -13,6 +13,8 @@ import Signup from "./views/Signup.vue";
 import Login from "./views/Login.vue";
 import Logout from "./views/Logout.vue";
 
+import Cart from "./views/cart/Cart.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -24,6 +26,7 @@ export default new Router({
     { path: "/edit/:id", name: "editPost", component: EditPost },
     { path: "/postings/:id", name: "showPosting", component: ShowPosting },
     { path: "/user_listings", name: "userPosts", component: UserPosts },
+    { path: "/cart", name: "cart", component: Cart },
     { path: "/newpost", name: "newPost", component: NewPost },
     { path: "/signup", name: "signup", component: Signup },
     { path: "/login", name: "login", component: Login },
