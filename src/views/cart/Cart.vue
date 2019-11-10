@@ -37,7 +37,11 @@ export default {
   created: function() {
     axios.get("/api/carted_products").then(response => {
       this.cart = response.data;
-      this.total = this.cart[0].total;
+      if (this.cart[0]) {
+        this.total = this.cart[0].total;
+      } else {
+        this.total = 0;
+      }
     });
   },
   methods: {
