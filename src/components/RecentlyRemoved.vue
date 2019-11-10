@@ -2,7 +2,7 @@
   <div class="recentlyRemoved">
     <h1>Recently Removed Items</h1>
     <div v-for="(item, index) in removedItems" :key="index">
-      <a @click.prevent="reAddItem(item)">{{ item.item.name }}</a>
+      <a @click.prevent="reAddItem(item.id)">{{ item.item.name }}</a>
     </div>
   </div>
 </template>
@@ -27,11 +27,7 @@ export default {
   },
   methods: {
     reAddItem(input) {
-      var params = {
-        status: 1
-      };
-
-      axios.patch("/api/carted_products/" + input.id).then(response => {
+      axios.patch("/api/carted_products/" + input).then(response => {
         console.log(response.data);
       });
     }
