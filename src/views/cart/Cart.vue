@@ -17,6 +17,9 @@
     <hr />
     <h1>${{total}}</h1>
     <button @click.prevent="createOrder()">Create Order</button>
+    <br />
+    <br />
+    <RecentlyRemoved></RecentlyRemoved>
   </div>
 </template>
 
@@ -25,9 +28,13 @@
 
 <script>
 import axios from "axios";
+import RecentlyRemoved from "../../components/RecentlyRemoved";
 
 export default {
   name: "cart",
+  components: {
+    RecentlyRemoved
+  },
   data: function() {
     return {
       cart: [],
