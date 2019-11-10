@@ -21,14 +21,14 @@ export default {
     };
   },
   created: function() {
-    axios.get("api/carted_products/re_add").then(response => {
+    axios.get("/api/carted_products/re_add").then(response => {
       this.removedItems = response.data;
     });
   },
   methods: {
     reAddItem(input) {
       var params = {
-        status: 2
+        status: 1
       };
 
       axios.patch("/api/carted_products/" + input.id).then(response => {

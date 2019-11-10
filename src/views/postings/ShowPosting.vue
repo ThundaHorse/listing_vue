@@ -24,9 +24,9 @@
           @click.prevent="addToCart(item)"
         >Add To Cart</button>
       </div>
-      {{ item.id }}
-      {{ items }}
-      user: {{ listing.user_id }}
+      <!-- {{ item.id }} -->
+      <!-- {{ items }} -->
+      <!-- user: {{ listing.user_id }} -->
       <h1 id="itemName">{{ item.name }}</h1>
       <div class="col-md-12">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
