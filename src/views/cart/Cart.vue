@@ -61,6 +61,7 @@ export default {
       });
     },
     createOrder() {
+      // Need to update item to re-add and have it show up in cart instead of removed
       var params = {
         user_id: parseInt(localStorage.getItem("user_id"))
       };
